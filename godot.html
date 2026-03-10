@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Godot Minigames!</title>
+  <link rel="icon" type="image/png" href="./assets/images/folio.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="yessir-body p5-page">
+    <div id="ps2Grid" aria-hidden="true"></div>
+        <script>
+            window.addEventListener("scroll", () => {
+            const header = document.querySelector("header");
+            const hero = document.querySelector("#home");
+
+            if (!hero) return;
+
+            if (window.scrollY > hero.offsetHeight - 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+            });
+        </script>
+        <script>
+            const DEFAULT_TILE_BG = "rgba(0, 0, 0, 0.65)";
+            const grid = document.getElementById("ps2Grid");
+            const palette = [
+                "#478cbf",
+                "#9a00cd",
+                "#90EE90", 
+                "#00FFFFFF"  
+            ];
+
+            const tilesPerBurst = 3;     
+            const tickMs = 140;          
+            const stayOnMs = 900;        
+
+            function buildGrid(){
+                grid.innerHTML = "";
+
+                const tileSize = 70; 
+                const gap = 4;
+                const pad = 16;
+
+                const cols = Math.ceil((window.innerWidth - pad) / (tileSize + gap));
+                const rows = Math.ceil((window.innerHeight - pad) / (tileSize + gap));
+                const total = cols * rows;
+
+                for(let i = 0; i < total; i++){
+                const tile = document.createElement("div");
+                tile.className = "ps2-tile";
+                grid.appendChild(tile);
+                }
+            }
+
+            function randomTile(){
+                const tiles = grid.children;
+                if(!tiles.length) return null;
+                const idx = Math.floor(Math.random() * tiles.length);
+                return tiles[idx];
+            }
+
+            function light(tile){
+                if(!tile) return;
+
+                
+                const color = palette[Math.floor(Math.random() * palette.length)];
+
+                tile.classList.add("on");
+                tile.style.backgroundColor = color;
+
+            
+                setTimeout(() => {
+                tile.classList.remove("on");
+                tile.style.backgroundColor = DEFAULT_TILE_BG;
+                }, stayOnMs)
+            }
+
+            buildGrid();
+            window.addEventListener("resize", buildGrid);
+
+            setInterval(() => {
+                for(let i = 0; i < tilesPerBurst; i++){
+                light(randomTile());
+                }
+            }, tickMs);
+        </script>
+
+            <header>
+                <nav class="fade-in delay p5-header">
+                <a href="index.html"> Back</a>
+                 </nav>
+            </header>
+
+            <div class="yessir-banner">
+                <h1 class="godot-overwrite">GODOT</h1>
+            </div>
+            <div class="p5-bbox"></div>
+            <div class ="p5-box">
+            </div>
+            <img src="assets/images/gd.png" class="glogo">
+            <p class="g-text">Minigames!</p>
+
+            <a href="https://drive.google.com/drive/folders/1M48D1e9Y79X5nhIrPkWlCCHEp2Y8NnNA?usp=sharing"
+            class="g-card"
+            target="_blank"
+            rel="noopener">
+            <img src="./assets/images/flap.gif" class="g-1">
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1S9VrDXimpySp6lXkhvRylBGazVsz5Wiy?usp=sharing"
+            class="g-card"
+            target="_blank"
+            rel="noopener">
+            <img src="./assets/images/tetry.gif" class="g-2">
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1P8YFBQWCiAmzy37_s9aITp8cWwlZpoO8?usp=sharing"
+            class="g-card"
+            target="_blank"
+            rel="noopener">
+            <img src="./assets/images/froggiest.gif" class="g-3">
+            </a>
+            
+            <a href="https://drive.google.com/drive/folders/1Xy0uYUutQ1AKfEmzxeEVkiQEmLuET_ID?usp=sharing"
+            class="g-card"
+            target="_blank"
+            rel="noopener">
+            <img src="./assets/images/snak.gif" class="g-4">
+            </a>
+                <p class="p-main-text">&copy; JSON 2025 ALL RIGHTS RESERVED <br>Everything u c here was done by urs truly</p>
+
+        </body>
+    </html>
